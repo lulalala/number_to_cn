@@ -13,10 +13,10 @@ module NumberToCn
     end
   end
 
-  def int_words
-    return "零" if self == 0
+  def self.int_words(num)
+    return "零" if num == 0
 
-    num_arr = self.to_s.split('').reverse
+    num_arr = num.to_s.split('').reverse
     rst_arr = []
 
     writable = -1 
@@ -43,11 +43,19 @@ module NumberToCn
     rst_arr.reverse.join
   end
 
-  def float_words
-    before_point     = self.to_i
-    after_point      = self.to_s.split(".")[1]
+  def int_words
+    self.class.int_words(self)
+  end
+
+  def self.float_words(num)
+    before_point     = num.to_i
+    after_point      = num.to_s.split(".")[1]
     after_point_zero = "零" * (after_point.length - after_point.to_i.to_s.length)
     "#{before_point.int_words}点#{after_point_zero}#{after_point.to_i.to_cn_clearly}"
+  end
+
+  def float_words
+    self.class.float_words(self)
   end
   
   def to_cn_clearly
